@@ -1,4 +1,4 @@
-package cz.radek.demoRadek.controller;
+package cz.radek.demoRadek.Model;
 
 
 
