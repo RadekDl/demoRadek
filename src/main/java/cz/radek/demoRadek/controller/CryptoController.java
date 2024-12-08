@@ -13,42 +13,40 @@ import java.util.List;
 @RequestMapping ("api/list")
 public class CryptoController {
 
-    private  List<Crypto> cryptoList = new ArrayList<>();
+    private List<Crypto> cryptoList = new ArrayList<>();
+
 
     @GetMapping
     public List<Crypto> getCryptoList() {
         return cryptoList;
     }
+
     @GetMapping("/size")
-    public int getCryptoListSize(){
+    public int getCryptoListSize() {
+        cryptoList.sort(Comparator.comparing(Crypto::getName));
         return cryptoList.size();
     }
+
     // přidání do listu crypto
     @PostMapping("/add")
-    public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto){
+    public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto) {
         cryptoList.add(crypto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Crypto added successfully");
     }
 
 
     @GetMapping("/price")
-    public void sortingPrice() {
+    public List<Crypto> sortingPrice() {
         // Seřazení crypta cena
         cryptoList.sort(Comparator.comparing(Crypto::getPrice));
-
+        return cryptoList;
     }
+
     @GetMapping("/quantity")
-    public void sortingQuantity() {
+    public List<Crypto> sortingQuantity() {
         // Seřazení crypta počet jednotek
         cryptoList.sort(Comparator.comparing(Crypto::getQuantity));
-
-    }
-    @GetMapping("/listing")
-    public void listing(){
-        System.out.println("výpis všech crypto v listu\n ");
-        for (int i = 0; i < getCryptoList().size(); i++) {
-            System.out.println(cryptoList.get(i).getName()+" symbol "+cryptoList.get(i).getSymbol()+" cena "+
-                    cryptoList.get(i).getPrice()+" počet jednotek "+ cryptoList.get(i).getQuantity());
-        }
+        return cryptoList;
     }
 }
+
