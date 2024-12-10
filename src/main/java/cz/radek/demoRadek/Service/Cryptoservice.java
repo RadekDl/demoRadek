@@ -38,6 +38,4 @@ public class Cryptoservice {
     }
     return null;
     }
-
-
 }
