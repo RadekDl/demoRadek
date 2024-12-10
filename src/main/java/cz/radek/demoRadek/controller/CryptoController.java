@@ -24,7 +24,7 @@ import java.util.List;
 
     // Získání všech kryptoměn
     @GetMapping
-    public List<Crypto> getAllCryptos(@RequestParam(required = false) String sort) {
+    public List<Crypto> getCryptoList(@RequestParam(required = false) String sort) {
         if ("price".equalsIgnoreCase(sort)) {
             return cryptoservice.sortingPrice();
         } else if ("name".equalsIgnoreCase(sort)) {
@@ -39,7 +39,7 @@ import java.util.List;
 
     // Získání detailu kryptoměny podle ID
     @GetMapping("/{id}")
-    public ResponseEntity<Crypto> getCryptoById(@PathVariable int id) {
+    public ResponseEntity<Crypto> informationById(@PathVariable int id) {
         Crypto crypto = cryptoservice.informationById(id);
         if (crypto != null) {
             return ResponseEntity.ok(crypto);
