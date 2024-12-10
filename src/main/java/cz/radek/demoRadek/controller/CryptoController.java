@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
     @RestController
-    @RequestMapping()
+    @RequestMapping("cryptos")
     public class CryptoController {
 
     @Autowired
     private Cryptoservice cryptoservice;
 
     // přidání do listu crypto
-    @PostMapping("cryptos")
+    @PostMapping()
     public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto) {
         cryptoservice.addCrypto(crypto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Crypto added successfully");
@@ -28,7 +28,7 @@ import java.util.List;
         if ("price".equalsIgnoreCase(sort)) {
             return cryptoservice.sortingPrice();
         } else if ("name".equalsIgnoreCase(sort)) {
-            return cryptoservice.getCryptoList();
+            return cryptoservice.sortingName();
         } else if ("quantity".equalsIgnoreCase(sort)) {
             return cryptoservice.sortingQuantity();
         } else {
