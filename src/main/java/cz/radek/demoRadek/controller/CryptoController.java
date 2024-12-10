@@ -21,7 +21,6 @@ import java.util.List;
         cryptoservice.addCrypto(crypto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Crypto added successfully");
     }
-
     // Získání všech kryptoměn
     @GetMapping
     public List<Crypto> getCryptoList(@RequestParam(required = false) String sort) {
@@ -36,7 +35,6 @@ import java.util.List;
             return cryptoservice.getCryptoList();
         }
     }
-
     // Získání detailu kryptoměny podle ID
     @GetMapping("/{id}")
     public ResponseEntity<Crypto> informationById(@PathVariable int id) {
