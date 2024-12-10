@@ -6,34 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-@RestController
-//@RequestMapping ("api/list")
-@RequestMapping("crypto")
-public class CryptoController {
-
-
-//    @GetMapping
-//    public List<Crypto> getCryptoList() {
-//        return cryptoList;
-//    }
-//
-//    @GetMapping("/size")
-//    public int getCryptoListSize() {
-//        cryptoList.sort(Comparator.comparing(Crypto::getName));
-//        return cryptoList.size();
-//    }
-//
-
+    @RestController
+    @RequestMapping("crypto")
+    public class CryptoController {
 
     @Autowired
     private Cryptoservice cryptoservice;
 
     // přidání do listu crypto
+    @PostMapping("cryptos")
     public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto) {
         cryptoservice.addCrypto(crypto);
         return ResponseEntity.status(HttpStatus.CREATED).body("Crypto added successfully");
@@ -66,5 +49,4 @@ public class CryptoController {
     }
 }
 
-}
 
