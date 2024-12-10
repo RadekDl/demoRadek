@@ -16,9 +16,7 @@ import java.util.List;
 @RequestMapping("crypto")
 public class CryptoController {
 
-//    private List<Crypto> cryptoList = new ArrayList<>();
-//
-//
+
 //    @GetMapping
 //    public List<Crypto> getCryptoList() {
 //        return cryptoList;
@@ -30,30 +28,43 @@ public class CryptoController {
 //        return cryptoList.size();
 //    }
 //
-//    // přidání do listu crypto
-//    @PostMapping("/add")
-//    public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto) {
-//        cryptoList.add(crypto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body("Crypto added successfully");
-//    }
-//
-//
-//    @GetMapping("/price")
-//    public List<Crypto> sortingPrice() {
-//        // Seřazení crypta cena
-//        cryptoList.sort(Comparator.comparing(Crypto::getPrice));
-//        return cryptoList;
-//    }
-//
-//    @GetMapping("/quantity")
-//    public List<Crypto> sortingQuantity() {
-//        // Seřazení crypta počet jednotek
-//        cryptoList.sort(Comparator.comparing(Crypto::getQuantity));
-//        return cryptoList;
-//    }
+
+
     @Autowired
     private Cryptoservice cryptoservice;
 
+    // přidání do listu crypto
+    public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto) {
+        cryptoservice.addCrypto(crypto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Crypto added successfully");
+    }
+
+    // Získání všech kryptoměn
+    @GetMapping
+    public List<Crypto> getAllCryptos(@RequestParam(required = false) String sort) {
+        if ("price".equalsIgnoreCase(sort)) {
+            return cryptoservice.sortingPrice();
+        } else if ("name".equalsIgnoreCase(sort)) {
+            return cryptoservice.getCryptoList();
+        } else if ("quantity".equalsIgnoreCase(sort)) {
+            return cryptoservice.sortingQuantity();
+        } else {
+            // Pokud není "sort",neřazený seznam
+            return cryptoservice.getCryptoList();
+        }
+    }
+
+    // Získání detailu kryptoměny podle ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Crypto> getCryptoById(@PathVariable int id) {
+        Crypto crypto = cryptoservice.informationById(id);
+        if (crypto != null) {
+            return ResponseEntity.ok(crypto);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+}
 
 }
 

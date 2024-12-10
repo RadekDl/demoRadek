@@ -20,10 +20,10 @@ public class Cryptoservice {
     public List<Crypto> getCryptoList(){
         return cryptoList;
     }
-    public int getCryptoListName() {
-        cryptoList.sort(Comparator.comparing(Crypto::getName));
-        return cryptoList.size();
-    }
+//    public int getCryptoListName() {
+//        cryptoList.sort(Comparator.comparing(Crypto::getName));
+//        return cryptoList.size();
+//    }
     public List<Crypto> sortingPrice() {
         cryptoList.sort(Comparator.comparing(Crypto::getPrice));
         return cryptoList;
@@ -32,10 +32,13 @@ public class Cryptoservice {
         cryptoList.sort(Comparator.comparing(Crypto::getQuantity));
         return cryptoList;
     }
-    public void  InformationById(int id){
-
-        System.out.println(cryptoList.get(id).getName()+cryptoList.get(id).getPrice()+cryptoList.get(id).getSymbol()
-                +cryptoList.get(id).getQuantity());
+    public Crypto  informationById(int id){
+    for (Crypto crypto : cryptoList) {
+        if (crypto.getId() == id) {
+            return crypto;
+        }
+    }
+    return null;
     }
 
 
